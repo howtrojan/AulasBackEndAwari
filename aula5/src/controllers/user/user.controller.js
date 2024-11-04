@@ -1,28 +1,55 @@
 import userService from "../../services/user/user.service.js";
 
-class UserController{
-    List(req, res){
-        const response = userService.searchUsers();
-        return res.status(200).json(response);
+class UserController {
+  async list(req, res) {
+    try {
+      const response = await userService.searchUsers();
+      return res.status(200).json(response[0]);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
     }
+  }
 
-    Create(req, res){
-        const {nome, sobrenome, curso, instituicao} = req.body;
-        console.log({nome, sobrenome, curso, instituicao});
-        return res.status(200).json({nome, sobrenome, curso, instituicao});
+  async create(req, res) {
+    try {
+      const checkEmail = await CheckEmailUtil.searchUsers(req.body.email);
+      if (!checkEmail || checkEmail.count === 0) {
+        const response = await userService.createUser(req.body);
+        return res.status(201).json(response);
+      } else {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
     }
+  }
 
-    Update(req, res){
-        const {nome, sobrenome, curso, instituicao} = req.body;
-        console.log({nome, sobrenome, curso, instituicao});
-        return res.status(200).json({nome, sobrenome, curso, instituicao});
+  async update(req, res) {
+    try {
+    if (!checkEmail || checkEmail.count === 0) {
+      const id = req.params.id;
+      const response = userService.updateUser(req.body, id);
+      return res.status(200).json(response);}else {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
     }
+  }
 
-    Delete(req, res){    
-        const {id} = req.params;
-        console.log({nome, sobrenome, curso, instituicao});
-        return res.status(200).json({id});
+  async delete(req, res) {
+    try {
+      const id = req.params.id;
+      const response = userService.deleteUser(id);
+      return res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
     }
+  }
 }
 
 export default new UserController();

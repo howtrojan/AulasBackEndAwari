@@ -6,11 +6,11 @@ const routes = Router();
 
 
 /*Rotas de usuários*/
-routes.get("/users", userController.List);
-routes.post("/users", userController.Create);
-routes.put("/users/:id", userController.Update); 
-routes.patch("/users/:id", userController.Update);
-routes.delete("/users/:id", userController.Delete);
+routes.get("/users", userController.list);
+routes.post("/users", userController.create);
+routes.put("/users/:id", userController.update); 
+routes.patch("/users/:id", userController.update);
+routes.delete("/users/:id", userController.delete);
 
 /*Rotas de pagamentos*/
 
