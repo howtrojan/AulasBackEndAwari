@@ -1,12 +1,11 @@
-version: ^3.2
 services:
   db:
     image: mongo:4.2
     container_name: db
     restart: always
     ports: 
-      - process.env.DB_PORT:27017
+      - ${DB_PORT}:27017
     environment:
-      MONGO_INITDB_DATABASE: process.env.DB_NAME
-      MONGO_INITDB_ROOT_USERNAME: process.env.DB_USER
-      MONGO_INITDB_ROOT_PASSWORD: process.env.DB_PASS
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
