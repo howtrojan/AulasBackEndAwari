@@ -1,9 +1,10 @@
-import connection from "../../config/db/mysql.js";
+import getConnection from "../../config/db/mysql.js";
 import CheckEmailUtil from "../../util/check-email.util.js";
 
 class UserService {
   async searchUsers() {
     try {
+      const connection = await getConnection();
       const users = await connection.query(
         `SELECT   id,
                   name,
@@ -49,6 +50,7 @@ class UserService {
 
   async updateUser(payload, id) {
     try {
+      const connection = await getConnection();
       const checkEmail = await CheckEmailUtil.searchUsers(payload.email);
       if (
         checkEmail.count === 0 ||
@@ -71,6 +73,7 @@ class UserService {
 
   async deleteUser(id) {
     try {
+      const connection = await getConnection();
       const users = await connection.query(
         `DELETE FROM users WHERE id = ${id}`
       );
