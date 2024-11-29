@@ -4,6 +4,10 @@ import db from "./configs/database.js";
 import carRouter from "./routes/carRouter.js";
 import utilitarioRouter from "./routes/utilitarioRouter.js";
 import esportivoRouter from "./routes/esportivoRouter.js";
+import clienteRouter from "./routes/clienteRouter.js";
+import funcionarioRouter from "./routes/funcionarioRouter.js";
+import reservaRouter from "./routes/reservasRouter.js";
+import promocaoRouter from "./routes/promocaoRouter.js";
 
 //conexão com o banco
 db.mongoose
@@ -23,9 +27,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// rotas
 app.use("/carros", carRouter);
 app.use("/utilitarios", utilitarioRouter);
 app.use("/esportivos", esportivoRouter);
+app.use("/clientes", clienteRouter);
+app.use("/funcionarios", funcionarioRouter);
+app.use("/reservas", reservaRouter);
+app.use("/promocao", promocaoRouter);
 
 
 app.listen(process.env.SERVER_PORT, () => {
